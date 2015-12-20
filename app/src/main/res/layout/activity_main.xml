@@ -9,4 +9,67 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.jce.ant.quickpress.MainActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="00:000"
+        android:id="@+id/bestResultShowTime"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Best result"
+        android:id="@+id/bestResultBtn"
+        android:layout_alignTop="@+id/bestResultShowTime"
+        android:layout_toLeftOf="@+id/bestResultShowTime"
+        android:layout_toStartOf="@+id/bestResultShowTime"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="00:000"
+        android:id="@+id/resentResultShowTime"
+        android:layout_below="@+id/bestResultShowTime"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Resent result"
+        android:id="@+id/resentResultBtn"
+        android:layout_alignTop="@+id/resentResultShowTime"
+        android:layout_alignRight="@+id/bestResultBtn"
+        android:layout_alignEnd="@+id/bestResultBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:id="@+id/settingsBtn"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/resentResultShowTime"
+        android:layout_toStartOf="@+id/resentResultShowTime" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:id="@+id/startBtn"
+        android:layout_below="@+id/settingsBtn"
+        android:layout_alignLeft="@+id/settingsBtn"
+        android:layout_alignStart="@+id/settingsBtn"
+        android:layout_marginTop="32dp" />
+
+
 </RelativeLayout>
