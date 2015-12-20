@@ -15,5 +15,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragmentContainer = (FrameLayout) findViewById(R.id.fragmentContainer);
+        GameFragment gameFragment = new GameFragment();
+
+       // setContentView(R.layout.fragment_game);
+        if (savedInstanceState != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(fragmentContainer.getId(), gameFragment, "TAG")
+                    .addToBackStack(null)
+                    .commit();
+        }
+
+
     }
 }
