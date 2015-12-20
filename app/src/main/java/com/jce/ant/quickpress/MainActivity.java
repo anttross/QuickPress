@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentContainer = (FrameLayout) findViewById(R.id.fragmentContainer);
         GameFragment gameFragment = new GameFragment();
 
+
+                // our code
        // setContentView(R.layout.fragment_game);
         if (savedInstanceState != null) {
             getSupportFragmentManager()
