@@ -71,5 +71,15 @@
         android:layout_alignStart="@+id/settingsBtn"
         android:layout_marginTop="32dp" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/gameFrame"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/resentResultBtn"
+        android:layout_toStartOf="@+id/resentResultBtn"></FrameLayout>
+
 
 </RelativeLayout>
