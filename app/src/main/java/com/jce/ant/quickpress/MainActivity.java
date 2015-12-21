@@ -9,42 +9,21 @@ import android.widget.FrameLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FrameLayout fragmentContainer;
+
     private Button settingsBtn, startBtn;
-    GameFragment gameFragment = new GameFragment();
+    View view;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentContainer = (FrameLayout) findViewById(R.id.fragmentContainer);
 
-/*
-                // our code
-       // setContentView(R.layout.fragment_game);
-        if (savedInstanceState != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(fragmentContainer.getId(), gameFragment, "TAG")
-                    .addToBackStack(null)
-                    .commit();
-        }
-*/
+        view = (GameView)findViewById(R.id.view1);
+        
         startBtn = (Button) findViewById(R.id.startBtn);
-/*
-        startBtn.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View view) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(fragmentContainer.getId(), gameFragment, "TAG")
-                        .addToBackStack(null)
-                        .commit();
-            }
-
-        });
-    */
         settingsBtn = (Button) findViewById(R.id.settingsBtn);
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {

@@ -9,6 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.jce.ant.quickpress.MainActivity">
 
+
+    <com.jce.ant.quickpress.GameView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:background="#dddddd"
+        android:id="@+id/view1" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,7 +79,7 @@
         android:layout_alignLeft="@+id/settingsBtn"
         android:layout_alignStart="@+id/settingsBtn"
         android:layout_marginTop="32dp" />
-
+<!--
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -83,6 +91,6 @@
         android:layout_toLeftOf="@+id/resentResultBtn"
         android:layout_toStartOf="@+id/resentResultBtn"
         android:layout_alignParentTop="true" />
-
+-->
 
 </RelativeLayout>
