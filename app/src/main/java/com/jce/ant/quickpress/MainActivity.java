@@ -18,7 +18,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private FrameLayout fragmentContainer;
-    Button btnSettings;
+    private Button btnSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

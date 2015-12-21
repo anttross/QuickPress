@@ -32,7 +32,7 @@
         android:layout_alignLeft="@+id/levelLbl"
         android:layout_alignStart="@+id/levelLbl" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -44,7 +44,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginStart="50dp" />
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -53,4 +53,15 @@
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/levelNum"
         android:layout_alignStart="@+id/levelNum" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save_Back"
+        android:id="@+id/saveBtn"
+        android:layout_below="@+id/complexityNum"
+        android:layout_alignLeft="@+id/complexityNum"
+        android:layout_alignStart="@+id/complexityNum"
+        android:layout_marginTop="77dp" />
 </RelativeLayout>
