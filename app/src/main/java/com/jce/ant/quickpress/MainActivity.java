@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button settingsBtn, startBtn;
     View view;
-
+    int level, complex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         view = (GameView)findViewById(R.id.view1);
-        
+
+//        String stLvl = savedInstanceState.getString("lvl", "1");
+//        String stCmpx = savedInstanceState.getString("cmpx", "0");
+//        level = Integer.parseInt(stLvl);
+  //      complex = Integer.parseInt(stCmpx);
+
+
         startBtn = (Button) findViewById(R.id.startBtn);
 
         settingsBtn = (Button) findViewById(R.id.settingsBtn);

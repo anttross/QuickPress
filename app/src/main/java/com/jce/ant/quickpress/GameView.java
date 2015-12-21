@@ -12,6 +12,7 @@ package com.jce.ant.quickpress;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,6 +20,7 @@ import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 
 import java.util.Random;
 
@@ -27,18 +29,27 @@ public class GameView extends View {
     int right, top, width, height;
     Paint paint;
     private Path path;
-    int x, y;
+    int x, y,xr,yr, clickCounter;
     Random rand = new Random();
-
+    int level, complex;
 
     private void init (AttributeSet attrs, int defStyle){
         paint = new Paint();
-        x=y = 0;
+        xr=yr=x=y = 0;
+        level = 3;
+        complex = 3;
+
+      //  clickCounter=Settings
        // paint.setColor(triAngColor);
         paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         path = new Path();
+        clickCounter = 0;
+//        level = Integer.parseInt(((EditText) findViewById(R.id.levelNum)).getText().toString());
+ //       complex = Integer.parseInt(((EditText) findViewById(R.id.complexityNum)).getText().toString());
+
+
 
         /*
         //Load attributes
@@ -64,12 +75,15 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
 
-        for(int i =0; i<5; i++) {
+        for(int i =0; i<complex; i++) {
             x = rand.nextInt(findViewById(R.id.view1).getWidth()-30)+15;
             y = rand.nextInt(findViewById(R.id.view1).getHeight()-30)+15;
             // canvas.drawColor(Color.BLUE);
             canvas.drawCircle(x, y, 30, paint);
         }
+        xr = rand.nextInt(findViewById(R.id.view1).getWidth()-30)+15;
+        yr = rand.nextInt(findViewById(R.id.view1).getHeight()-30)+15;
+        canvas.drawRect(xr, yr, xr+120, yr+60,paint);
 
     }
 
@@ -95,17 +109,17 @@ public class GameView extends View {
 
     @Override
     public boolean onTouchEvent( MotionEvent event){
-        int bgColor;
+
         if(event.getAction() == MotionEvent.ACTION_DOWN){
+            if  ((xr <= event.getX()) && (xr+120 >= event.getX())
+                    && (yr <= event.getY()) && (yr+60 >= event.getY())
+                    && (clickCounter<level)){
 
+                clickCounter++;
+                invalidate();
+            }//if2
 
-         //   paint.setColor(triAngColor);
-            invalidate();
-
-
-
-
-        }//if
+        }//if1
 
         return true;
     }//onTouchEvent
