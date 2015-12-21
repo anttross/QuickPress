@@ -58,10 +58,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save_Back"
+        android:text="Back"
         android:id="@+id/saveBtn"
         android:layout_below="@+id/complexityNum"
         android:layout_alignLeft="@+id/complexityNum"
         android:layout_alignStart="@+id/complexityNum"
-        android:layout_marginTop="77dp" />
+        android:paddingBottom="20dp" />
 </RelativeLayout>
