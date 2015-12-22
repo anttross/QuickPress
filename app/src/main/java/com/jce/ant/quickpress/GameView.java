@@ -11,25 +11,32 @@ package com.jce.ant.quickpress;
  */
 
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Random;
 
 
 public class GameView extends View {
+
+    MainActivity mainMem = new MainActivity();
     int right, top, width, height;
     Paint paint;
     private Path path;
-    int x, y,xr,yr, clickCounter;
+    int x, y,xr,yr;
+    public int clickCounter;
     Random rand = new Random();
     int level, complex;
 
@@ -38,6 +45,7 @@ public class GameView extends View {
         xr=yr=x=y = 0;
         level = 3;
         complex = 3;
+
 
       //  clickCounter=Settings
        // paint.setColor(triAngColor);
@@ -107,21 +115,34 @@ public class GameView extends View {
     }//3
 
 
+
+
+
     @Override
     public boolean onTouchEvent( MotionEvent event){
 
         if(event.getAction() == MotionEvent.ACTION_DOWN){
             if  ((xr <= event.getX()) && (xr+120 >= event.getX())
-                    && (yr <= event.getY()) && (yr+60 >= event.getY())
-                    && (clickCounter<level)){
+                    && (yr <= event.getY()) && (yr+60 >= event.getY()))
+                if((clickCounter<level-1)){
 
-                clickCounter++;
-                invalidate();
-            }//if2
+                    clickCounter++;
+                    invalidate();
+                }else{ // on last touch
+                    ((MainActivity)getContext()).stopGame();
+                    // save best value
+
+                }
+
 
         }//if1
+
 
         return true;
     }//onTouchEvent
 
+
+    public void resetCounter() {
+        clickCounter=0;
+    }
 }//MyView
