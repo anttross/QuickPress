@@ -18,21 +18,21 @@
         android:id="@+id/view1" />
 
     <TextView
+        android:id="@+id/bestResultShowTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="00:000"
-        android:id="@+id/bestResultShowTime"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <TextView
+        android:id="@+id/bestResultBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Best result"
-        android:id="@+id/bestResultBtn"
         android:layout_alignTop="@+id/bestResultShowTime"
         android:layout_toLeftOf="@+id/bestResultShowTime"
         android:layout_toStartOf="@+id/bestResultShowTime"
@@ -40,23 +40,23 @@
         android:layout_marginEnd="20dp" />
 
     <TextView
+        android:id="@+id/recentResultShowTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="00:000"
-        android:id="@+id/resentResultShowTime"
         android:layout_below="@+id/bestResultShowTime"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp" />
 
     <TextView
+        android:id="@+id/recentResultBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Resent result"
-        android:id="@+id/resentResultBtn"
-        android:layout_alignTop="@+id/resentResultShowTime"
+        android:text="Recent result"
+        android:layout_alignTop="@+id/recentResultShowTime"
         android:layout_alignRight="@+id/bestResultBtn"
         android:layout_alignEnd="@+id/bestResultBtn" />
 
@@ -66,8 +66,8 @@
         android:text="Settings"
         android:id="@+id/settingsBtn"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/resentResultShowTime"
-        android:layout_toStartOf="@+id/resentResultShowTime"
+        android:layout_toLeftOf="@+id/recentResultShowTime"
+        android:layout_toStartOf="@+id/recentResultShowTime"
         />
 
     <Button

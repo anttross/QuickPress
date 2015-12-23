@@ -3,19 +3,26 @@ package com.jce.ant.quickpress;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    ArrayAdapter arrayAdapter;
+    SimpleCursorAdapter cursorAdapter;
+    Cursor cursor;
 
     boolean isRunning = false;
     private Button settingsBtn, startBtn;
@@ -57,8 +64,25 @@ public class MainActivity extends AppCompatActivity {
 //        level = Integer.parseInt(stLvl);
   //      complex = Integer.parseInt(stCmpx);
 
-        resentResultShowTime = (TextView) findViewById(R.id.resentResultShowTime);
+
+        resentResultShowTime = (TextView) findViewById(R.id.recentResultShowTime);
         bestResultShowTime = (TextView) findViewById(R.id.bestResultShowTime);
+
+
+        DAL dalObj = new DAL(this);
+        //dalObj.addRecords(0,0); // delete after testing
+        level = 2;
+        complex = 3;
+
+
+        dalObj.initRecords(0,0); // first init
+
+        int placeBT = dalObj.getLvlCmpx(level,complex);
+        int disBT = dalObj.getRecord(placeBT);
+        String dBT = Integer.toString(disBT);
+        bestResultShowTime.setText(dBT);
+
+
 
         startBtn = (Button) findViewById(R.id.startBtn);
 
@@ -87,6 +111,7 @@ public static Context getContext(){
     // start method
     private void start(){
         if (!isRunning) {
+            Toast.makeText(getApplicationContext(), "let the game begin", Toast.LENGTH_SHORT).show();
             isRunning = true;
             ((GameView) view).invalidate();
             startTime = SystemClock.uptimeMillis();
@@ -102,9 +127,9 @@ public static Context getContext(){
     }
 
     public void stopGame(){
-        //Toast.makeText(getApplicationContext(), "before", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getApplicationContext(), "game ends", Toast.LENGTH_SHORT).show();
         stop(this.editor);
-  //      Toast.makeText(getApplicationContext(), "after", Toast.LENGTH_SHORT).show();
+
 
     };
 
@@ -115,7 +140,7 @@ public static Context getContext(){
             isRunning = false;
             if ((bestTime > updatedTime) || (bestTime == 0)) { //check the best
                 bestTime = updatedTime;
-
+                Toast.makeText(getApplicationContext(), "new record !", Toast.LENGTH_SHORT).show();
                 // update best time for layout case
                 editor.putLong("best", bestTime);
                 editor.apply();
