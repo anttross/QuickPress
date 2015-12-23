@@ -10,6 +10,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by assafbt on 22/12/2015.
@@ -41,7 +43,12 @@ public class DAL {
                 values.put(BestTime.TimeEntry.RECORD, "empty");
                 //insert database
                 db.insert(BestTime.TimeEntry.TABLE_NAME, null, values);
+
+
+
+                //Log.d("INIT", "palce " + place);
             }
+        Toast.makeText(MainActivity.getContext()," INIT FINISH", Toast.LENGTH_SHORT).show();
         db.close();
     }
 
@@ -118,6 +125,7 @@ public class DAL {
                 values.put(BestTime.TimeEntry.RECORD, (j*i)+"");
                 //insert database
                 db.insert(BestTime.TimeEntry.TABLE_NAME, null, values);
+                Log.e("ADD", "palce " + place);
             }
         db.close();
     }
