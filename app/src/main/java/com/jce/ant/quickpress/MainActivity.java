@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
+    Settings settings = new Settings();
     ArrayAdapter arrayAdapter;
     SimpleCursorAdapter cursorAdapter;
     Cursor cursor;
@@ -71,9 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         DAL dalObj = new DAL(this);
         //dalObj.addRecords(0,0); // delete after testing
-        level = 2;
-        complex = 3;
-
+        level = settings.getLevel();
+        complex = settings.getComplex();
 
         dalObj.initRecords(0,0); // first init
 

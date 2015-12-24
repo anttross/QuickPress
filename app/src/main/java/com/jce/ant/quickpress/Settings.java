@@ -1,6 +1,7 @@
 package com.jce.ant.quickpress;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +11,24 @@ import android.widget.TextView;
 
 public class Settings extends AppCompatActivity {
     private Button btnSave;
-    private String level, complex;
+    static int level, complex;
     Bundle b = new Bundle();
+    EditText lvl,cmpx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        SharedPreferences prefs = getSharedPreferences("prefCW2", MODE_PRIVATE);
+        final SharedPreferences.Editor editor = prefs.edit();
 
+        lvl = (EditText) findViewById(R.id.levelNum);
+        lvl.setText(prefs.getString("lvlRead", "3"));
+        level = Integer.parseInt(lvl.getText().toString());
+
+        cmpx = (EditText) findViewById(R.id.complexityNum);
+        cmpx.setText(prefs.getString("lvlRead", "3"));
+        complex = Integer.parseInt(cmpx.getText().toString());
 
 
         btnSave = (Button) findViewById(R.id.saveBtn);
@@ -26,13 +37,33 @@ public class Settings extends AppCompatActivity {
 
             public void onClick(View view) {
 
-                b.putString("lvl", ((EditText) findViewById(R.id.levelNum)).getText().toString());
-                b.putString("cmpx", ((EditText) findViewById(R.id.complexityNum)).getText().toString());
+                lvl = (EditText) findViewById(R.id.levelNum);
+                String tempStr = lvl.getText().toString();
+                lvl.setText(tempStr);
+                editor.putString("lvlRead", lvl.getText().toString());
 
 
+                cmpx = (EditText) findViewById(R.id.complexityNum);
+                tempStr = cmpx.getText().toString();
+                cmpx.setText(tempStr);
+                editor.putString("cmpxRead", cmpx.getText().toString());
+
+                editor.apply();
 
                 startActivity(new Intent(Settings.this, MainActivity.class));
             }
         });
     }
+
+
+    public static Integer getLevel() {
+        Integer l = level;
+        return l;
+    }
+
+    public static Integer getComplex() {
+        Integer c = complex;
+        return c;
+    }
+
 }

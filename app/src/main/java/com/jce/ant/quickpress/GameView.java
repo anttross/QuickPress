@@ -31,21 +31,30 @@ import java.util.Random;
 
 public class GameView extends View {
 
+    Settings settings = new Settings();
     MainActivity mainMem = new MainActivity();
+
     int right, top, width, height;
     Paint paint;
+
     private Path path;
     int x, y,xr,yr;
     public int clickCounter;
     Random rand = new Random();
-    int level, complex;
+    int level = 3;
+    int complex = 3;
 
     private void init (AttributeSet attrs, int defStyle){
         paint = new Paint();
         xr=yr=x=y = 0;
-        level = 3;
-        complex = 3;
+        level = settings.getLevel();
+        complex = settings.getComplex();
 
+
+
+
+
+        level = mainMem.milliseconds;
 
       //  clickCounter=Settings
        // paint.setColor(triAngColor);
@@ -128,6 +137,7 @@ public class GameView extends View {
 
                     clickCounter++;
                     invalidate();
+
                 }else{ // on last touch
                     ((MainActivity)getContext()).stopGame();
                     // save best value
