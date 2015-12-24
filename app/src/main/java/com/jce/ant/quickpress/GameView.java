@@ -33,7 +33,7 @@ public class GameView extends View {
 
     Settings settings = new Settings();
     MainActivity mainMem = new MainActivity();
-
+    View gv = (GameView)findViewById(R.id.gameView);
     int right, top, width, height;
     Paint paint;
 
@@ -41,24 +41,25 @@ public class GameView extends View {
     int x, y,xr,yr;
     public int clickCounter;
     Random rand = new Random();
-    int level = 3;
-    int complex = 3;
+    int size = 30;
+    int level;
+    int complex;
 
     private void init (AttributeSet attrs, int defStyle){
         paint = new Paint();
         xr=yr=x=y = 0;
-        level = settings.getLevel();
-        complex = settings.getComplex();
+        level = Settings.getLevel();
+        complex = Settings.getComplex();
 
 
 
 
 
-        level = mainMem.milliseconds;
+       // level = mainMem.milliseconds;
 
       //  clickCounter=Settings
        // paint.setColor(triAngColor);
-        paint.setStrokeWidth(10);
+       // paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         path = new Path();
@@ -91,17 +92,26 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
+        paint.setColor(Color.parseColor("#992222"));
 
+        //circles * complexity
         for(int i =0; i<complex; i++) {
-            x = rand.nextInt(findViewById(R.id.view1).getWidth()-30)+15;
-            y = rand.nextInt(findViewById(R.id.view1).getHeight()-30)+15;
-            // canvas.drawColor(Color.BLUE);
-            canvas.drawCircle(x, y, 30, paint);
+            do {
+                x = rand.nextInt(gv.getWidth());
+            }while(x>gv.getWidth()-(size*2));
+            do {
+                y = rand.nextInt(gv.getHeight());
+            }while(y>gv.getHeight()-(size*2));
+            canvas.drawCircle(x+size, y+size, size, paint);
         }
-        xr = rand.nextInt(findViewById(R.id.view1).getWidth()-30)+15;
-        yr = rand.nextInt(findViewById(R.id.view1).getHeight()-30)+15;
-        canvas.drawRect(xr, yr, xr+120, yr+60,paint);
-
+       // one rectangle
+        do {
+            xr = rand.nextInt(gv.getWidth());
+        }while(xr>(gv.getWidth()-(size*4)));
+        do {
+            yr = rand.nextInt(gv.getHeight());
+        }while(yr>gv.getHeight()-(size * 2));
+        canvas.drawRect(xr, yr, xr + (size * 4), yr + (size * 2), paint);
     }
 
 

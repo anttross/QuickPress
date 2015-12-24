@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,13 +11,23 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.jce.ant.quickpress.MainActivity">
 
-
+<!--
     <com.jce.ant.quickpress.GameView
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
         android:background="#dddddd"
         android:id="@+id/view1" />
+
+   -->
+
+    <com.jce.ant.quickpress.GameView
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="#dddddd"
+        android:id="@+id/gameView" />
+
+
 
     <TextView
         android:id="@+id/bestResultShowTime"
@@ -79,18 +91,38 @@
         android:layout_alignLeft="@+id/settingsBtn"
         android:layout_alignStart="@+id/settingsBtn"
         android:layout_marginTop="32dp" />
-<!--
-    <fragment
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="com.jce.ant.quickpress.GameFragment"
-        android:id="@+id/gameFragment"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:text="3"
+        android:id="@+id/tempLvl"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/resentResultBtn"
-        android:layout_toStartOf="@+id/resentResultBtn"
-        android:layout_alignParentTop="true" />
--->
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:id="@+id/tempCml"
+        android:visibility="invisible"
+        android:layout_alignTop="@+id/tempLvl"
+        android:layout_toRightOf="@+id/tempLvl"
+        android:layout_toEndOf="@+id/tempLvl" />
+    <!--
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:name="com.jce.ant.quickpress.GameFragment"
+            android:id="@+id/gameFragment"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/resentResultBtn"
+            android:layout_toStartOf="@+id/resentResultBtn"
+            android:layout_alignParentTop="true" />
+    -->
 
 </RelativeLayout>

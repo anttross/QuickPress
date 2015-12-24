@@ -8,11 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
     private Button btnSave;
     static int level, complex;
-    Bundle b = new Bundle();
+    //Bundle b = new Bundle();
     EditText lvl,cmpx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,7 @@ public class Settings extends AppCompatActivity {
         cmpx.setText(prefs.getString("lvlRead", "3"));
         complex = Integer.parseInt(cmpx.getText().toString());
 
-
         btnSave = (Button) findViewById(R.id.saveBtn);
-
         btnSave.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -40,17 +39,25 @@ public class Settings extends AppCompatActivity {
                 lvl = (EditText) findViewById(R.id.levelNum);
                 String tempStr = lvl.getText().toString();
                 lvl.setText(tempStr);
+                level = Integer.parseInt(lvl.getText().toString());
                 editor.putString("lvlRead", lvl.getText().toString());
 
-
                 cmpx = (EditText) findViewById(R.id.complexityNum);
-                tempStr = cmpx.getText().toString();
-                cmpx.setText(tempStr);
+                String tempStr2 = cmpx.getText().toString();
+                cmpx.setText(tempStr2);
+                complex = Integer.parseInt(cmpx.getText().toString());
                 editor.putString("cmpxRead", cmpx.getText().toString());
-
                 editor.apply();
+                if(level<1 || level >10)
+                    Toast.makeText(getApplicationContext(), "Level should be 1-10", Toast
+                            .LENGTH_SHORT).show();
+                else if(complex<0 || complex>4)
+                    Toast.makeText(getApplicationContext(), "Complexity should be 0-4", Toast
+                            .LENGTH_SHORT).show();
+                else {
 
-                startActivity(new Intent(Settings.this, MainActivity.class));
+                    startActivity(new Intent(Settings.this, MainActivity.class));
+                }
             }
         });
     }

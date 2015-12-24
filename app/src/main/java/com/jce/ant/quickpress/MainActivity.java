@@ -11,12 +11,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     Settings settings = new Settings();
@@ -42,17 +39,18 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
-    int secs, mins, milliseconds;
+    int secs=0;
+    int milliseconds=0; //mins,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.mContext = this;
+        mContext = this;
 
 
-        view = (GameView)findViewById(R.id.view1);
+        view = findViewById(R.id.gameView);
 
 
         prefs = getSharedPreferences("best", MODE_PRIVATE);
@@ -71,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
         DAL dalObj = new DAL(this);
         //dalObj.addRecords(0,0); // delete after testing
-        level = settings.getLevel();
-        complex = settings.getComplex();
+        level = Settings.getLevel();
+        complex = Settings.getComplex();
 
         dalObj.initRecords(0,0); // first init
 
@@ -112,7 +110,7 @@ public static Context getContext(){
         if (!isRunning) {
             Toast.makeText(getApplicationContext(), "let the game begin", Toast.LENGTH_SHORT).show();
             isRunning = true;
-            ((GameView) view).invalidate();
+            view.invalidate();
             startTime = SystemClock.uptimeMillis();
             customHandler.postDelayed(updateTimerThread, 0);
             ((GameView) view).resetCounter();
@@ -130,7 +128,7 @@ public static Context getContext(){
         stop(this.editor);
 
 
-    };
+    }
 
     // stop method
     public void stop(SharedPreferences.Editor editor){
@@ -145,14 +143,14 @@ public static Context getContext(){
                 editor.apply();
 
                 secs = (int) (updatedTime / 1000);
-                mins = secs / 60;
+               // mins = secs / 60;
                 secs = secs % 60;
                 milliseconds = (int) (updatedTime % 1000);
-
-                bestResultShowTime.setText(" " + mins + ":" + String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
+//" " + mins + ":" +
+                bestResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
             }
         }
-    };
+    }
 
 
     // time running
@@ -165,10 +163,11 @@ public static Context getContext(){
             updatedTime = timeSwapBuff + timeInMilliseconds;
 
             secs = (int) (updatedTime / 1000);
-            mins = secs / 60;
+           // mins = secs / 60;
             secs = secs % 60;
             milliseconds = (int) (updatedTime % 1000);
-            resentResultShowTime.setText(" " + mins + ":" + String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
+            //" " + mins + ":" +
+            resentResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
             customHandler.postDelayed(this, 0);
 
         }

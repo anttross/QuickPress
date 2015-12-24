@@ -33,6 +33,7 @@
         android:layout_alignStart="@+id/levelLbl" />
 
     <EditText
+        android:inputType="number|phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -45,6 +46,7 @@
         android:layout_marginStart="50dp" />
 
     <EditText
+        android:inputType="number|phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
