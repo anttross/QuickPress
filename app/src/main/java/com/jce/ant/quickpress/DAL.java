@@ -13,11 +13,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+
 /**
  * Created by assafbt on 22/12/2015.
  */
 public class DAL {
     DBHelper dbHelper;
+    final int maxLevel = 10;
+    final int maxComplex = 4;
+
 
     // do something
 
@@ -32,22 +36,26 @@ public class DAL {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //set data
-        ContentValues values = new ContentValues();
+        ContentValues values;
 
         //init -> record=empty
         int place, i,j;
-        for (i=1;i<=level;i++)
-            for (j=0;j<=complex;j++){
-                place=getLvlCmpx(level, complex);
+        for (i=1;i<=maxLevel;i++) {
+            for (j = 0; j <= maxComplex; j++) {
+                values = new ContentValues();
+                place = getLvlCmpx(level, complex);
                 values.put(BestTime.TimeEntry.LVL_CMPX, place);
-                values.put(BestTime.TimeEntry.RECORD, "empty");
+                values.put(BestTime.TimeEntry.RECORD, "0");
+                //values.putNull(BestTime.TimeEntry.RECORD);
                 //insert database
                 db.insert(BestTime.TimeEntry.TABLE_NAME, null, values);
+                
 
 
 
-                //Log.d("INIT", "palce " + place);
+                Log.e("INIT", "palce " + place);
             }
+        }
         Toast.makeText(MainActivity.getContext()," INIT FINISH", Toast.LENGTH_SHORT).show();
         db.close();
     }
@@ -68,9 +76,7 @@ public class DAL {
 
         // check for best record
         int timeDB =getRecord(lvl_cmpx);
-
-        //int time = Integer.parseInt(time1);
-        if ((timeDB) > Integer.parseInt(time1)){
+        if ((timeDB) > Integer.parseInt(time1) && (Integer.parseInt(time1) != 0)){
             //insert data
             db.insert(BestTime.TimeEntry.TABLE_NAME, null, values);
             db.close();
@@ -109,25 +115,33 @@ public class DAL {
 
 
 
-    public void addRecords(int level, int complex){
+    public boolean isBDEmpty(){
         //get db
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         //set data
         ContentValues values = new ContentValues();
+        boolean empty=true;
 
-        //init -> record=empty
-        int place, i,j;
-        for (i=1;i<=level;i++)
-            for (j=0;j<=complex;j++){
-                place=getLvlCmpx(level, complex);
-                values.put(BestTime.TimeEntry.LVL_CMPX, place);
-                values.put(BestTime.TimeEntry.RECORD, (j*i)+"");
-                //insert database
-                db.insert(BestTime.TimeEntry.TABLE_NAME, null, values);
-                Log.e("ADD", "palce " + place);
+        int place,record;
+        int i=1,j=0;
+        for (i=1;i<=maxLevel;i++)
+            for (j=0;j<=maxComplex;j++){
+                place=getLvlCmpx(i, j);
+                record = getRecord(place);
+
+                if ((record > 0 )){
+                    empty= false;
+                }
+
+
+                Log.e("exist", "palce " + place);
             }
         db.close();
+        if (((i+j)== 50) && (!empty)) {
+            return false;
+        }
+        return false;
     }
 
 }

@@ -34,10 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="00:000"
+        android:text="@string/bestTimeShow"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+         />
 
     <TextView
         android:id="@+id/bestResultBtn"
@@ -47,7 +47,7 @@
         android:text="Best result"
         android:layout_alignTop="@+id/bestResultShowTime"
         android:layout_toLeftOf="@+id/bestResultShowTime"
-        android:layout_toStartOf="@+id/bestResultShowTime"
+
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp" />
 
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="00:000"
+        android:text="@string/recentTimeShow"
         android:layout_below="@+id/bestResultShowTime"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -91,7 +91,7 @@
         android:layout_alignLeft="@+id/settingsBtn"
         android:layout_alignStart="@+id/settingsBtn"
         android:layout_marginTop="32dp" />
-
+<!--
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,18 +111,6 @@
         android:layout_alignTop="@+id/tempLvl"
         android:layout_toRightOf="@+id/tempLvl"
         android:layout_toEndOf="@+id/tempLvl" />
-    <!--
-        <fragment
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:name="com.jce.ant.quickpress.GameFragment"
-            android:id="@+id/gameFragment"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/resentResultBtn"
-            android:layout_toStartOf="@+id/resentResultBtn"
-            android:layout_alignParentTop="true" />
-    -->
+  -->
 
 </RelativeLayout>

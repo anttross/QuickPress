@@ -11,20 +11,15 @@ package com.jce.ant.quickpress;
  */
 
 
-import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Random;
 
@@ -33,6 +28,7 @@ public class GameView extends View {
 
     Settings settings = new Settings();
     MainActivity mainMem = new MainActivity();
+    DBHelper dbHelper;
     View gv = (GameView)findViewById(R.id.gameView);
     int right, top, width, height;
     Paint paint;
@@ -52,30 +48,11 @@ public class GameView extends View {
         complex = Settings.getComplex();
 
 
-
-
-
-       // level = mainMem.milliseconds;
-
-      //  clickCounter=Settings
-       // paint.setColor(triAngColor);
-       // paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
 
         path = new Path();
         clickCounter = 0;
-//        level = Integer.parseInt(((EditText) findViewById(R.id.levelNum)).getText().toString());
- //       complex = Integer.parseInt(((EditText) findViewById(R.id.complexityNum)).getText().toString());
 
-
-
-        /*
-        //Load attributes
-        final TypedArray a = getContext().obtainStyledAttributes(
-                attrs.R.styleable.MyView, defStyle, 0);
-        String mExampleString = a.getString(R.styleable.MyView_exampleString);
-        int mExampleColor = a.getColor(R.styleable.MyView_exampleColor, Color.RED);
-           */
     }//init
 
     @Override
@@ -140,16 +117,21 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent( MotionEvent event){
 
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
-            if  ((xr <= event.getX()) && (xr+120 >= event.getX())
-                    && (yr <= event.getY()) && (yr+60 >= event.getY()))
-                if((clickCounter<level-1)){
+        //SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-                    clickCounter++;
-                    invalidate();
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                if  ((xr <= event.getX()) && (xr+120 >= event.getX())
+                        && (yr <= event.getY()) && (yr+60 >= event.getY()))
+                    if((clickCounter<level-1)){
 
-                }else{ // on last touch
-                    ((MainActivity)getContext()).stopGame();
+                        clickCounter++;
+                        invalidate();
+
+                    }else{ // on last touch
+
+                        int lvl_cmpx = Settings.getLvlCmpx(Settings.getLevel(), Settings.getComplex());
+                        ((MainActivity) getContext()).stopGame(lvl_cmpx);
+
                     // save best value
 
                 }

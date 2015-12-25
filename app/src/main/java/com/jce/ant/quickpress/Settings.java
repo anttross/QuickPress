@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
     private Button btnSave;
     static int level, complex;
-    //Bundle b = new Bundle();
     EditText lvl,cmpx;
+    final int maxLevel = 10;
+    final int maxComplex = 4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +48,11 @@ public class Settings extends AppCompatActivity {
                 complex = Integer.parseInt(cmpx.getText().toString());
                 editor.putString("cmpxRead", cmpx.getText().toString());
                 editor.apply();
-                if(level<1 || level >10)
+
+                if(level<1 || level >maxLevel)
                     Toast.makeText(getApplicationContext(), "Level should be 1-10", Toast
                             .LENGTH_SHORT).show();
-                else if(complex<0 || complex>4)
+                else if(complex<0 || complex>maxComplex)
                     Toast.makeText(getApplicationContext(), "Complexity should be 0-4", Toast
                             .LENGTH_SHORT).show();
                 else {
@@ -71,6 +72,11 @@ public class Settings extends AppCompatActivity {
     public static Integer getComplex() {
         Integer c = complex;
         return c;
+    }
+
+    public static int getLvlCmpx(int level,int complex){
+
+        return level*10 + complex;
     }
 
 }
