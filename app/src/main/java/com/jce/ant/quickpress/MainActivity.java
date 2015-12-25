@@ -13,13 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Settings settings = new Settings();
-    ArrayAdapter arrayAdapter;
-    SimpleCursorAdapter cursorAdapter;
-    Cursor cursor;
 
     boolean isRunning = false;
     private Button settingsBtn, startBtn;
@@ -27,10 +22,8 @@ public class MainActivity extends AppCompatActivity {
     int level, complex;
     private static Context mContext;
     private TextView resentResultShowTime, bestResultShowTime;
-
     private long startTime = 0L;
     private long bestTime = 0L;
-
     private Handler customHandler = new Handler();
 
     long timeInMilliseconds = 0L;
@@ -38,17 +31,14 @@ public class MainActivity extends AppCompatActivity {
     long updatedTime = 0L;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
-
     int secs=0;
-    int milliseconds=0; //mins,
+    int milliseconds=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mContext = this;
-
         view = findViewById(R.id.gameView);
 
         prefs = getSharedPreferences("best", MODE_PRIVATE);
@@ -58,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         bestResultShowTime = (TextView) findViewById(R.id.bestResultShowTime);
 
         DAL dalObj = new DAL(this);
-        //dalObj.addRecords(0,0); // delete after testing
         level = Settings.getLevel();
         complex = Settings.getComplex();
 
@@ -67,31 +56,20 @@ public class MainActivity extends AppCompatActivity {
         int placeBT = dalObj.getLvlCmpx(level, complex);
         int disBT = dalObj.getRecord(placeBT);
         String dBT = Integer.toString(disBT);
-      //  bestResultShowTime.setText(dBT);
 
         secs = placeBT / 1000;
-        // mins = secs / 60;
         secs = secs % 60;
         milliseconds = placeBT % 1000;
 
         secs = placeBT / 1000;
-        // mins = secs / 60;
         secs = secs % 60;
         milliseconds = placeBT % 1000;
-
-        // String dBT = Integer.toString(disBT);
 
         bestResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
         resentResultShowTime.setText("00:000");
 
-
-
-
-
         startBtn = (Button) findViewById(R.id.startBtn);
-
         settingsBtn = (Button) findViewById(R.id.settingsBtn);
-
         settingsBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -115,27 +93,19 @@ public static Context getContext(){
     // start method
     private void start(){
         if (!isRunning) {
-          //  Toast.makeText(getApplicationContext(), "let the game begin", Toast.LENGTH_SHORT)
-          //          .show();
             isRunning = true;
             view.invalidate();
             startTime = SystemClock.uptimeMillis();
             customHandler.postDelayed(updateTimerThread, 0);
             ((GameView) view).resetCounter();
-
         }
         else {
             //do nothing;
         }
-
-
     }
 
     public void stopGame(){
-       // Toast.makeText(getApplicationContext(), "game ends", Toast.LENGTH_SHORT).show();
         stop(this.editor);
-
-
     }
 
     // stop method
@@ -145,40 +115,28 @@ public static Context getContext(){
             isRunning = false;
             if ((bestTime > updatedTime) || (bestTime == 0)) { //check the best
                 bestTime = updatedTime;
-              //  Toast.makeText(getApplicationContext(), "new record !", Toast.LENGTH_SHORT)
-              // .show();
                 // update best time for layout case
                 editor.putLong("best", bestTime);
                 editor.apply();
-
                 secs = (int) (updatedTime / 1000);
-               // mins = secs / 60;
                 secs = secs % 60;
                 milliseconds = (int) (updatedTime % 1000);
-//" " + mins + ":" +
                 bestResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
             }
         }
     }
 
-
     // time running
     private Runnable updateTimerThread = new Runnable() {
 
         public void run() {
-
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-
             updatedTime = timeSwapBuff + timeInMilliseconds;
-
             secs = (int) (updatedTime / 1000);
-           // mins = secs / 60;
             secs = secs % 60;
             milliseconds = (int) (updatedTime % 1000);
-            //" " + mins + ":" +
             resentResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
             customHandler.postDelayed(this, 0);
-
         }
 
     };

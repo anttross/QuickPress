@@ -13,7 +13,6 @@ import android.widget.Toast;
 public class Settings extends AppCompatActivity {
     private Button btnSave;
     static int level, complex;
-    //Bundle b = new Bundle();
     EditText lvl,cmpx;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

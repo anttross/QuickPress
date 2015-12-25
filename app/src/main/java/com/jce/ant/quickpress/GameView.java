@@ -31,8 +31,6 @@ import java.util.Random;
 
 public class GameView extends View {
 
-    Settings settings = new Settings();
-    MainActivity mainMem = new MainActivity();
     View gv = (GameView)findViewById(R.id.gameView);
     int right, top, width, height;
     Paint paint;
