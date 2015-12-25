@@ -49,23 +49,13 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
-
         view = findViewById(R.id.gameView);
-
 
         prefs = getSharedPreferences("best", MODE_PRIVATE);
         editor = prefs.edit();
 
-
-//        String stLvl = savedInstanceState.getString("lvl", "1");
-//        String stCmpx = savedInstanceState.getString("cmpx", "0");
-//        level = Integer.parseInt(stLvl);
-  //      complex = Integer.parseInt(stCmpx);
-
-
         resentResultShowTime = (TextView) findViewById(R.id.recentResultShowTime);
         bestResultShowTime = (TextView) findViewById(R.id.bestResultShowTime);
-
 
         DAL dalObj = new DAL(this);
         //dalObj.addRecords(0,0); // delete after testing
@@ -74,10 +64,27 @@ public class MainActivity extends AppCompatActivity {
 
         dalObj.initRecords(0,0); // first init
 
-        int placeBT = dalObj.getLvlCmpx(level,complex);
+        int placeBT = dalObj.getLvlCmpx(level, complex);
         int disBT = dalObj.getRecord(placeBT);
         String dBT = Integer.toString(disBT);
-        bestResultShowTime.setText(dBT);
+      //  bestResultShowTime.setText(dBT);
+
+        secs = placeBT / 1000;
+        // mins = secs / 60;
+        secs = secs % 60;
+        milliseconds = placeBT % 1000;
+
+        secs = placeBT / 1000;
+        // mins = secs / 60;
+        secs = secs % 60;
+        milliseconds = placeBT % 1000;
+
+        // String dBT = Integer.toString(disBT);
+
+        bestResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
+        resentResultShowTime.setText("00:000");
+
+
 
 
 
@@ -108,7 +115,8 @@ public static Context getContext(){
     // start method
     private void start(){
         if (!isRunning) {
-            Toast.makeText(getApplicationContext(), "let the game begin", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getApplicationContext(), "let the game begin", Toast.LENGTH_SHORT)
+          //          .show();
             isRunning = true;
             view.invalidate();
             startTime = SystemClock.uptimeMillis();
@@ -137,7 +145,8 @@ public static Context getContext(){
             isRunning = false;
             if ((bestTime > updatedTime) || (bestTime == 0)) { //check the best
                 bestTime = updatedTime;
-                Toast.makeText(getApplicationContext(), "new record !", Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(getApplicationContext(), "new record !", Toast.LENGTH_SHORT)
+              // .show();
                 // update best time for layout case
                 editor.putLong("best", bestTime);
                 editor.apply();

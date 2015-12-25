@@ -28,7 +28,7 @@ public class Settings extends AppCompatActivity {
         level = Integer.parseInt(lvl.getText().toString());
 
         cmpx = (EditText) findViewById(R.id.complexityNum);
-        cmpx.setText(prefs.getString("lvlRead", "3"));
+        cmpx.setText(prefs.getString("cmpxRead", "3"));
         complex = Integer.parseInt(cmpx.getText().toString());
 
         btnSave = (Button) findViewById(R.id.saveBtn);

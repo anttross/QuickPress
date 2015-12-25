@@ -50,38 +50,15 @@ public class GameView extends View {
         xr=yr=x=y = 0;
         level = Settings.getLevel();
         complex = Settings.getComplex();
-
-
-
-
-
-       // level = mainMem.milliseconds;
-
-      //  clickCounter=Settings
-       // paint.setColor(triAngColor);
-       // paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-
         path = new Path();
         clickCounter = 0;
-//        level = Integer.parseInt(((EditText) findViewById(R.id.levelNum)).getText().toString());
- //       complex = Integer.parseInt(((EditText) findViewById(R.id.complexityNum)).getText().toString());
 
-
-
-        /*
-        //Load attributes
-        final TypedArray a = getContext().obtainStyledAttributes(
-                attrs.R.styleable.MyView, defStyle, 0);
-        String mExampleString = a.getString(R.styleable.MyView_exampleString);
-        int mExampleColor = a.getColor(R.styleable.MyView_exampleColor, Color.RED);
-           */
     }//init
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh){
         super.onSizeChanged(w,h,oldw,oldh);
-
 
         right = getPaddingRight();
         top = getPaddingTop();
@@ -114,10 +91,6 @@ public class GameView extends View {
         canvas.drawRect(xr, yr, xr + (size * 4), yr + (size * 2), paint);
     }
 
-
-
-
-
     public GameView(Context context) {//1
         super(context);
         init(null, 0);
@@ -133,10 +106,6 @@ public class GameView extends View {
         init(attrs,defStyle);
     }//3
 
-
-
-
-
     @Override
     public boolean onTouchEvent( MotionEvent event){
 
@@ -144,23 +113,15 @@ public class GameView extends View {
             if  ((xr <= event.getX()) && (xr+120 >= event.getX())
                     && (yr <= event.getY()) && (yr+60 >= event.getY()))
                 if((clickCounter<level-1)){
-
                     clickCounter++;
                     invalidate();
-
                 }else{ // on last touch
                     ((MainActivity)getContext()).stopGame();
                     // save best value
-
                 }
-
-
         }//if1
-
-
-        return true;
+       return true;
     }//onTouchEvent
-
 
     public void resetCounter() {
         clickCounter=0;

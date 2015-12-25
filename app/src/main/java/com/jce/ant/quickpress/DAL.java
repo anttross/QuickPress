@@ -23,8 +23,6 @@ public class DAL {
 
     public DAL(Context c){
         dbHelper = new DBHelper(c);
-
-
     }//DAL
 
     public void initRecords(int level, int complex){
@@ -40,15 +38,13 @@ public class DAL {
             for (j=0;j<=complex;j++){
                 place=getLvlCmpx(level, complex);
                 values.put(BestTime.TimeEntry.LVL_CMPX, place);
-                values.put(BestTime.TimeEntry.RECORD, "empty");
+                values.put(BestTime.TimeEntry.RECORD, 0);
                 //insert database
                 db.insert(BestTime.TimeEntry.TABLE_NAME, null, values);
 
-
-
                 //Log.d("INIT", "palce " + place);
             }
-        Toast.makeText(MainActivity.getContext()," INIT FINISH", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.getContext()," INIT FINISH", Toast.LENGTH_SHORT).show();
         db.close();
     }
 
@@ -65,7 +61,6 @@ public class DAL {
         String where = BestTime.TimeEntry.LVL_CMPX + "=?";
         String[] whereArgs = {lvl_cmpx +""};
 
-
         // check for best record
         int timeDB =getRecord(lvl_cmpx);
 
@@ -81,11 +76,7 @@ public class DAL {
 
         db.update(BestTime.TimeEntry.TABLE_NAME, values, where, whereArgs);
         db.close();
-
-
-
     }
-
 
     public int getRecord(int lvl_cmpx){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
