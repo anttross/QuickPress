@@ -13,18 +13,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-    Settings settings = new Settings();
+public class     MainActivity extends AppCompatActivity {
+        Settings settings = new Settings();
 
-    boolean isRunning = false;
-    private Button settingsBtn, startBtn;
-    View view;
-    int level, complex;
-    private static Context mContext;
-    private TextView resentResultShowTime, bestResultShowTime;
+        boolean isRunning = false;
+        private Button settingsBtn, startBtn;
+        View view;
+        int level=3, complex=2;
+        private static Context mContext;
+        private TextView resentResultShowTime, bestResultShowTime;
 
-    private long startTime = 0L;
-    private long bestTime = 0L;
+
+
+        private long startTime = 0L;
+        private long bestTime = 0L;
 
     private Handler customHandler = new Handler();
 
@@ -62,24 +64,21 @@ public class MainActivity extends AppCompatActivity {
         complex = Settings.getComplex();
 
 
-        dalObj.initRecords(0,0);
 
-/*
+
         // first init
         if (dalObj.isBDEmpty()) {
-            dalObj.initRecords(0,0);
+            dalObj.initRecords();
         }
-*/
 
-        int placeBT = dalObj.getLvlCmpx(level,complex);
-        secs = (int) (placeBT / 1000);
-        // mins = secs / 60;
-        secs = secs % 60;
-        milliseconds = (int) (placeBT % 1000);
 
-       // String dBT = Integer.toString(disBT);
+        int placeBT = dalObj.getIndex(level, complex);
 
-        bestResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
+        int dRec = dalObj.getRecord(placeBT);
+       // String dBT = dalObj.convertToTimeStringFormat(dRec);
+
+        bestResultShowTime.setText(dalObj.convertToTimeStringFormat(dRec));
+        //bestResultShowTime.setText(dRec+"");
         resentResultShowTime.setText("00:000");
 
 
@@ -143,21 +142,17 @@ public static Context getContext(){
             isRunning = false;
 
             bestTime = dalObj.getRecord(lvl_cmpx);
-            int bestTimeValue = dalObj.getRecord(lvl_cmpx);
-            String dBT = Integer.toString(bestTimeValue);
-            if ((bestTime == 0)) { //check the best
-                dalObj.updateRecord(lvl_cmpx, dBT);
+            int bestTimeValue = (int)updatedTime;
+           // String dBT = Integer.toString(bestTimeValue);
+            if ((bestTime == 0) || (bestTime > bestTimeValue)) { //check the best
+                dalObj.updateRecord(lvl_cmpx, bestTimeValue);
+
                 Toast.makeText(getApplicationContext(), "new record !", Toast.LENGTH_SHORT).show();
                 // update best time for layout case
-                editor.putLong("best", bestTime);
-                editor.apply();
+                //editor.putLong("best", bestTime);
+                //editor.apply();
 
-                secs = (int) (updatedTime / 1000);
-               // mins = secs / 60;
-                secs = secs % 60;
-                milliseconds = (int) (updatedTime % 1000);
-//" " + mins + ":" +
-                bestResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
+               // bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
             }
         }
     }
