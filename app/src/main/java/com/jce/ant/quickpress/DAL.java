@@ -27,6 +27,7 @@ public class DAL {
     final int maxComplex = 4;
     Cursor crs;
 
+
     // do something
 
     public DAL(Context c){
@@ -37,6 +38,7 @@ public class DAL {
 
     public void initRecords(){
         //get db
+
         db = dbHelper.getWritableDatabase();
 
         //set data
@@ -115,33 +117,34 @@ public class DAL {
 
         int recordReturn = 0;
         int idIndex,idRecord,temp;
+        String table = BestTime.TimeEntry.TABLE_NAME;
+        String selL = BestTime.TimeEntry.LVL_CMPX;
+        String selR = BestTime.TimeEntry.RECORD;
+        crs = db.rawQuery("SELECT "+selL+", "+selR+" FROM " + table, null);
+        int c = crs.getCount();
+        System.out.println("### rows crs has "+ c);
 
 
-       crs= db.rawQuery("SELECT * FROM " + BestTime.TimeEntry.TABLE_NAME, null);
 
-/*
-        String[] selectionArgs = {place+"", place+""};
-        crs= db.rawQuery("SELECT * FROM " + BestTime.TimeEntry.TABLE_NAME +
-                                " WHERE " + BestTime.TimeEntry.LVL_CMPX + " >=? AND" +
-                                    BestTime.TimeEntry.LVL_CMPX + " <=? ",
-                                    selectionArgs);
-*/
+        // if(crs.isClosed())
         idRecord = crs.getColumnIndex(BestTime.TimeEntry.RECORD);
         idIndex = crs.getColumnIndex(BestTime.TimeEntry.LVL_CMPX);
-        while(crs.moveToNext()) {
-            temp = crs.getInt(idIndex);
-            if (temp == place){
-                recordReturn = crs.getInt(idRecord);
-                break;
-            }
-            Log.e("exist", "get record " + recordReturn + " from index " + place);
-        }
-        crs.close();
 
+     //  if( crs.isNull(1)) {
+        while (crs.moveToNext()) {
+               temp = crs.getInt(idIndex);
+                 System.out.println("### temp is "+temp);
 
+            if (temp == place) {
+                   recordReturn = crs.getInt(idRecord);
+                   break;
+               }
+               Log.e("exist", "get record " + recordReturn + " from index " + place);
+           }
+      // }
+       // crs.close();
         db.close();
         return recordReturn;
-
     }
 
     public String convertToTimeStringFormat(int dbRecord ){
@@ -167,16 +170,13 @@ public class DAL {
     public boolean isBDEmpty() {
         //get db
         db = dbHelper.getReadableDatabase();
-
         crs = db.rawQuery("SELECT * FROM " + BestTime.TimeEntry.TABLE_NAME, null);
-
         if (crs.getCount() > 0) {
             db.close();
-            return true;
+            return false;
         }
         db.close();
-
-        return false;
+        return true;
 
 
        /* //set data

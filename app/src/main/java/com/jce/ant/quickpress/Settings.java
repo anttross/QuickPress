@@ -11,7 +11,8 @@ import android.widget.Toast;
 
 public class Settings extends AppCompatActivity {
     private Button btnSave;
-    static int level, complex;
+    static int level =1;
+    static int complex=0;
     EditText lvl,cmpx;
     final int maxLevel = 10;
     final int maxComplex = 4;

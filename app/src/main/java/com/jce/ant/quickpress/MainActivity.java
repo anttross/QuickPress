@@ -58,20 +58,14 @@ public class     MainActivity extends AppCompatActivity {
         bestResultShowTime = (TextView) findViewById(R.id.bestResultShowTime);
        // bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
 
-
-
         //dalObj.addRecords(0,0); // delete after testing
         level = Settings.getLevel();
         complex = Settings.getComplex();
-
-
-
 
         // first init
         if (dalObj.isBDEmpty()) {
             dalObj.initRecords();
         }
-
 
         int placeBT = dalObj.getIndex(level, complex);
 
@@ -150,7 +144,7 @@ public static Context getContext(){
 
                 Toast.makeText(getApplicationContext(), "new record !", Toast.LENGTH_SHORT).show();
                 // update best time for layout case
-                //editor.putLong("best", bestTime);
+               // editor.putLong("best", bestTime);
                 //editor.apply();
 
                 bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
