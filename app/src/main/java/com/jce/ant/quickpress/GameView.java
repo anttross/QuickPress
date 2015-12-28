@@ -17,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -71,15 +72,19 @@ public class GameView extends View {
         super.onDraw(canvas);
         paint.setColor(Color.parseColor("#992222"));
 
+
         //circles * complexity
         for(int i =0; i<complex; i++) {
+
             do {
                 x = rand.nextInt(gv.getWidth());
             }while(x>gv.getWidth()-(size*2));
             do {
                 y = rand.nextInt(gv.getHeight());
             }while(y>gv.getHeight()-(size*2));
+           // Rect
             canvas.drawCircle(x+size, y+size, size, paint);
+
         }
        // one rectangle
         do {

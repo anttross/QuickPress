@@ -56,6 +56,7 @@ public class     MainActivity extends AppCompatActivity {
 
         resentResultShowTime = (TextView) findViewById(R.id.recentResultShowTime);
         bestResultShowTime = (TextView) findViewById(R.id.bestResultShowTime);
+       // bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
 
 
 
@@ -152,7 +153,7 @@ public static Context getContext(){
                 //editor.putLong("best", bestTime);
                 //editor.apply();
 
-               // bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
+                bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
             }
         }
     }

@@ -49,34 +49,39 @@ public class DAL {
         for (l=minLevel;l<=maxLevel;l++) {
             for (c = minComplex; c <= maxComplex; c++) {
                 place = getIndex(l,c);
-                updateRecord(place, record);
+               // updateRecord(place, record);
 
-                /*
+
                 values = new ContentValues();
                 place = getIndex(l, c);
-                values.put(BestTime.TimeEntry.PLACE, place);
+                values.put(BestTime.TimeEntry.LVL_CMPX, place);
                 values.put(BestTime.TimeEntry.RECORD, record);
 
                 //insert database
                 db.insert(BestTime.TimeEntry.TABLE_NAME, null, values);
 
-                */
+
 
                 Log.e("INIT", "init record " + record + " to index " + place);
-              //  Log.e("INIT", "index " + index);
+
             }
         }
-        Toast.makeText(MainActivity.getContext()," INIT FINISH", Toast.LENGTH_SHORT).show();
+        Log.e("INIT", "init finish ");
+
+//        Toast.makeText(MainActivity.getContext()," INIT FINISH", Toast.LENGTH_SHORT).show();
         db.close();
+        Log.e("INIT", "after close ");
+
     }
 
 
     public void updateRecord(int place, int time1)  {
         //get db
-        db = dbHelper.getWritableDatabase();
 
         // check for best record
         int timeDB =getRecord(place);
+        db = dbHelper.getWritableDatabase();
+
         if ((timeDB >= time1) || (timeDB == 0)){
 
            //set data
@@ -106,30 +111,35 @@ public class DAL {
 
 
     public int getRecord(int place){
-        db = dbHelper.getWritableDatabase();
+        db = dbHelper.getReadableDatabase();
+
         int recordReturn = 0;
         int idIndex,idRecord,temp;
-        // get record from
+
+
+       crs= db.rawQuery("SELECT * FROM " + BestTime.TimeEntry.TABLE_NAME, null);
+
+/*
         String[] selectionArgs = {place+"", place+""};
-
-        crs= db.rawQuery("SELECT * FROM " + BestTime.TimeEntry.TABLE_NAME, null);
-
-        /*
         crs= db.rawQuery("SELECT * FROM " + BestTime.TimeEntry.TABLE_NAME +
-                                " WHERE " + BestTime.TimeEntry.INDEX + " >=? AND" +
-                                    BestTime.TimeEntry.INDEX + " <=? ",
+                                " WHERE " + BestTime.TimeEntry.LVL_CMPX + " >=? AND" +
+                                    BestTime.TimeEntry.LVL_CMPX + " <=? ",
                                     selectionArgs);
-                                    */
+*/
         idRecord = crs.getColumnIndex(BestTime.TimeEntry.RECORD);
         idIndex = crs.getColumnIndex(BestTime.TimeEntry.LVL_CMPX);
         while(crs.moveToNext()) {
             temp = crs.getInt(idIndex);
             if (temp == place){
                 recordReturn = crs.getInt(idRecord);
+                break;
             }
-            crs.close();
             Log.e("exist", "get record " + recordReturn + " from index " + place);
         }
+        crs.close();
+
+
+        db.close();
         return recordReturn;
 
     }
@@ -154,11 +164,22 @@ public class DAL {
 
 
 
-    public boolean isBDEmpty(){
+    public boolean isBDEmpty() {
         //get db
-        db = dbHelper.getWritableDatabase();
+        db = dbHelper.getReadableDatabase();
 
-        //set data
+        crs = db.rawQuery("SELECT * FROM " + BestTime.TimeEntry.TABLE_NAME, null);
+
+        if (crs.getCount() > 0) {
+            db.close();
+            return true;
+        }
+        db.close();
+
+        return false;
+
+
+       /* //set data
         ContentValues values = new ContentValues();
         boolean empty=true;
 
@@ -180,7 +201,9 @@ public class DAL {
         if (((i+j)== 50) && (!empty)) {
             empty = false;
         }
+    db.
         return empty;
     }
-
+    */
+    }
 }
