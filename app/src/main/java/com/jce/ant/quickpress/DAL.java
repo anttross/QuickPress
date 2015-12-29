@@ -9,10 +9,9 @@ package com.jce.ant.quickpress;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.Toast;
+
 
 
 /**
@@ -69,8 +68,6 @@ public class DAL {
             }
         }
         Log.e("INIT", "init finish ");
-
-//        Toast.makeText(MainActivity.getContext()," INIT FINISH", Toast.LENGTH_SHORT).show();
         db.close();
         Log.e("INIT", "after close ");
 
@@ -95,12 +92,12 @@ public class DAL {
             String[] whereArgs = {place +""};
             db.update(BestTime.TimeEntry.TABLE_NAME, values, where, whereArgs);
 
-            Log.e("exist", "record on " + place + " was update to " + time1);
+            Log.e("updateRecord", "record on " + place + " was update to " + time1);
 
 
         }
         else{
-            Log.e("exist", "record on " + place + " was not update");
+            Log.e("updateRecord", "record on " + place + " was not update");
             // do nothing
         }
 
@@ -111,6 +108,20 @@ public class DAL {
 
     }
 
+
+    public void resetRecord(int place){
+        db = dbHelper.getWritableDatabase();
+        //set data
+        int time1 = 0;
+        ContentValues values = new ContentValues();
+        values.put(BestTime.TimeEntry.LVL_CMPX, place);
+        values.put(BestTime.TimeEntry.RECORD, time1);
+
+        String where = BestTime.TimeEntry.LVL_CMPX + "=?";
+        String[] whereArgs = {place +""};
+        db.update(BestTime.TimeEntry.TABLE_NAME, values, where, whereArgs);
+        db.close();
+    }
 
     public int getRecord(int place){
         db = dbHelper.getReadableDatabase();
@@ -139,7 +150,7 @@ public class DAL {
                    recordReturn = crs.getInt(idRecord);
                    break;
                }
-               Log.e("exist", "get record " + recordReturn + " from index " + place);
+               Log.e("getRecord", "get record " + recordReturn + " from index " + place);
            }
       // }
        // crs.close();
@@ -177,33 +188,5 @@ public class DAL {
         }
         db.close();
         return true;
-
-
-       /* //set data
-        ContentValues values = new ContentValues();
-        boolean empty=true;
-
-        int place,record;
-        int i=1,j=0;
-        for (i=1;i<=maxLevel;i++)
-            for (j=0;j<=maxComplex;j++){
-                place=getIndex(i, j);
-                record = getRecord(place);
-
-                if ((record > 0 )){
-                    empty= false;
-                }
-
-
-                Log.e("isBDEmpty", place + " = " + empty);
-            }
-        db.close();
-        if (((i+j)== 50) && (!empty)) {
-            empty = false;
-        }
-    db.
-        return empty;
-    }
-    */
     }
 }

@@ -19,6 +19,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -122,24 +123,25 @@ public class GameView extends View {
     @Override
     public boolean onTouchEvent( MotionEvent event){
 
-        //SQLiteDatabase db = dbHelper.getWritableDatabase();
+            if((event.getAction() == MotionEvent.ACTION_DOWN)){
+                    boolean isRunningNow = ((MainActivity) getContext()).isRunning;
+                    Log.e("onTouchEvent","isRunningNow = "+ isRunningNow);
+                    if ((xr <= event.getX()) && (xr + 120 >= event.getX())
+                            && (yr <= event.getY()) && (yr + 60 >= event.getY())) {
+                        if ((clickCounter < level - 1)&& isRunningNow) {
+                            clickCounter++;
+                            invalidate();
 
-            if(event.getAction() == MotionEvent.ACTION_DOWN){
-                if  ((xr <= event.getX()) && (xr+120 >= event.getX())
-                        && (yr <= event.getY()) && (yr+60 >= event.getY()))
-                    if((clickCounter<level-1)){
+                        } else { // on last touch
+                            int lvl_cmpx = Settings.getLvlCmpx(Settings.getLevel(), Settings.getComplex());
 
-                        clickCounter++;
-                        invalidate();
+                            ((MainActivity) getContext()).stopGame(lvl_cmpx);
 
-                    }else{ // on last touch
+                            // save best value
 
-                        int lvl_cmpx = Settings.getLvlCmpx(Settings.getLevel(), Settings.getComplex());
-                        ((MainActivity) getContext()).stopGame(lvl_cmpx);
+                        }
 
-                    // save best value
-
-                }
+                    }
 
 
         }//if1

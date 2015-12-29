@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -97,11 +98,33 @@ public class     MainActivity extends AppCompatActivity {
             }
         });
 
+        bestResultShowTime.setOnClickListener(new View.OnClickListener(){
+
+                                                  @Override
+                                                  public void onClick(View view) {
+
+                                                      int place1 = Settings.getLvlCmpx(Settings.getLevel(), Settings.getComplex());
+                                                    dalObj.resetRecord(place1);
+                                                      int dRec = dalObj.getRecord(place1);
+                                                      bestResultShowTime.setText(dalObj.convertToTimeStringFormat(dRec));
+
+
+                                                  }
+                                              }
+
+
+
+        );
+
 
 
 
 
     }//onCreate
+
+    public boolean mIsRunning(){
+        return isRunning;
+    }
 
 public static Context getContext(){
     return  mContext;
@@ -109,7 +132,7 @@ public static Context getContext(){
     // start method
     private void start(){
         if (!isRunning) {
-            Toast.makeText(getApplicationContext(), "let the game begin", Toast.LENGTH_SHORT).show();
+            Log.e("Context", "let the game begin");
             isRunning = true;
             view.invalidate();
             startTime = SystemClock.uptimeMillis();
@@ -174,14 +197,5 @@ public static Context getContext(){
 
     };
 
-/*
-    public static void updateRec(int lvl_cmpx, String val)
-    {
-        mContext = MainActivity.getContext();
-        DAL dalObj =  DAL(mContext);
 
-        int lc= lvl_cmpx;
-        dalObj.updateRecord(lvl_cmpx, val);
-    };
-*/
 }//MainActivity
