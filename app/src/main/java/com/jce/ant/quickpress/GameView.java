@@ -70,29 +70,48 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         paint.setColor(Color.parseColor("#992222"));
-
+        Rect[] circleObj= new Rect[4];
+        Rect temp = new Rect();
+        Rect rect = new Rect();
 
         //build the circles (according to complexity)
         for(int i =0; i<complex; i++) {
-
             do {
                 x = rand.nextInt(gv.getWidth());
             }while(x>gv.getWidth()-(size*2));
             do {
                 y = rand.nextInt(gv.getHeight());
             }while(y>gv.getHeight()-(size*2));
-           // Rect
-            canvas.drawCircle(x+size, y+size, size, paint);
 
-        }
-       // build rectangle
+            if(circleObj[i]==null)
+                circleObj[i]=new Rect();
+
+            temp.set(x - size, y - size, x + size, y + size);
+            boolean interS = false;
+            for(int j=0;((!circleObj[j].isEmpty()) && (j<=complex));j++){
+                //
+                if(temp.intersect(circleObj[j]) || rect.intersect(circleObj[j])) {
+                    i--;
+                    interS = true;
+                    break;
+                }
+            }
+            if(!interS) {
+                circleObj[i].set(x - size, y - size, x + size, y + size);
+                canvas.drawCircle(x + size, y + size, size, paint);
+            }
+        }//for circles
+
+        //rectangle
         do {
             xr = rand.nextInt(gv.getWidth());
-        }while(xr>(gv.getWidth()-(size*4)));
+        } while (xr > (gv.getWidth() - (size * 4)));
         do {
             yr = rand.nextInt(gv.getHeight());
-        }while(yr>gv.getHeight()-(size * 2));
+        } while (yr > gv.getHeight() - (size * 2));
         canvas.drawRect(xr, yr, xr + (size * 4), yr + (size * 2), paint);
+       // rect.set(xr, yr, xr + (size * 4), yr + (size * 2));
+
     }
 
 
