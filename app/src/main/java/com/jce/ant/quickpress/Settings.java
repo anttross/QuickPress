@@ -16,6 +16,7 @@ public class Settings extends AppCompatActivity {
     EditText lvl,cmpx;
     final int maxLevel = 10;
     final int maxComplex = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class Settings extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+
 
                 lvl = (EditText) findViewById(R.id.levelNum);
                 String tempStr = lvl.getText().toString();

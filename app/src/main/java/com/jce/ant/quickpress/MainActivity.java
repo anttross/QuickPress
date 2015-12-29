@@ -57,9 +57,8 @@ public class     MainActivity extends AppCompatActivity {
 
         resentResultShowTime = (TextView) findViewById(R.id.recentResultShowTime);
         bestResultShowTime = (TextView) findViewById(R.id.bestResultShowTime);
-       // bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
 
-        //dalObj.addRecords(0,0); // delete after testing
+
         level = Settings.getLevel();
         complex = Settings.getComplex();
 
@@ -69,22 +68,17 @@ public class     MainActivity extends AppCompatActivity {
         }
 
         int placeBT = dalObj.getIndex(level, complex);
-
         int dRec = dalObj.getRecord(placeBT);
-       // String dBT = dalObj.convertToTimeStringFormat(dRec);
-
         bestResultShowTime.setText(dalObj.convertToTimeStringFormat(dRec));
-        //bestResultShowTime.setText(dRec+"");
         resentResultShowTime.setText("00:000");
 
 
 
         startBtn = (Button) findViewById(R.id.startBtn);
-
         settingsBtn = (Button) findViewById(R.id.settingsBtn);
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
-
+            // go to Settings View
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, Settings.class));
             }
@@ -100,36 +94,23 @@ public class     MainActivity extends AppCompatActivity {
 
         bestResultShowTime.setOnClickListener(new View.OnClickListener(){
 
-                                                  @Override
-                                                  public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
 
-                                                      int place1 = Settings.getLvlCmpx(Settings.getLevel(), Settings.getComplex());
-                                                    dalObj.resetRecord(place1);
-                                                      int dRec = dalObj.getRecord(place1);
-                                                      bestResultShowTime.setText(dalObj.convertToTimeStringFormat(dRec));
-
-
-                                                  }
-                                              }
-
-
-
-        );
-
-
-
-
-
+                int place1 = Settings.getLvlCmpx(Settings.getLevel(), Settings.getComplex());
+                dalObj.resetRecord(place1);
+                int dRec = dalObj.getRecord(place1);
+                bestResultShowTime.setText(dalObj.convertToTimeStringFormat(dRec));
+            }
+        });
     }//onCreate
 
-    public boolean mIsRunning(){
-        return isRunning;
-    }
-
+//
 public static Context getContext(){
     return  mContext;
 }
-    // start method
+
+    // start the clock
     private void start(){
         if (!isRunning) {
             Log.e("Context", "let the game begin");
@@ -153,7 +134,7 @@ public static Context getContext(){
 
     }
 
-    // stop method
+    // stop the clock
     public void stop(SharedPreferences.Editor editor, int lvl_cmpx){
         customHandler.removeCallbacks(updateTimerThread);
         if (isRunning) {//running
@@ -161,19 +142,14 @@ public static Context getContext(){
 
             bestTime = dalObj.getRecord(lvl_cmpx);
             int bestTimeValue = (int)updatedTime;
-           // String dBT = Integer.toString(bestTimeValue);
             if ((bestTime == 0) || (bestTime > bestTimeValue)) { //check the best
                 dalObj.updateRecord(lvl_cmpx, bestTimeValue);
 
                 Toast.makeText(getApplicationContext(), "new record !", Toast.LENGTH_SHORT).show();
-                // update best time for layout case
-               // editor.putLong("best", bestTime);
-                //editor.apply();
-
                 bestResultShowTime.setText(dalObj.convertToTimeStringFormat(bestTimeValue));
             }
         }
-    }
+    }//stop
 
 
     // time running
@@ -182,20 +158,16 @@ public static Context getContext(){
         public void run() {
 
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-
             updatedTime = timeSwapBuff + timeInMilliseconds;
-
             secs = (int) (updatedTime / 1000);
-           // mins = secs / 60;
             secs = secs % 60;
             milliseconds = (int) (updatedTime % 1000);
-            //" " + mins + ":" +
             resentResultShowTime.setText(String.format("%02d", secs) + ":" + String.format("%03d", milliseconds));
             customHandler.postDelayed(this, 0);
 
-        }
+        }//run
 
-    };
+    };//updateTimerThread
 
 
 }//MainActivity

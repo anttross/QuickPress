@@ -28,9 +28,7 @@ import java.util.Random;
 
 public class GameView extends View {
 
-    Settings settings = new Settings();
-    MainActivity mainMem = new MainActivity();
-    DBHelper dbHelper;
+
     View gv = (GameView)findViewById(R.id.gameView);
     int right, top, width, height;
     Paint paint;
@@ -74,7 +72,7 @@ public class GameView extends View {
         paint.setColor(Color.parseColor("#992222"));
 
 
-        //circles * complexity
+        //build the circles (according to complexity)
         for(int i =0; i<complex; i++) {
 
             do {
@@ -87,7 +85,7 @@ public class GameView extends View {
             canvas.drawCircle(x+size, y+size, size, paint);
 
         }
-       // one rectangle
+       // build rectangle
         do {
             xr = rand.nextInt(gv.getWidth());
         }while(xr>(gv.getWidth()-(size*4)));
@@ -124,6 +122,7 @@ public class GameView extends View {
     public boolean onTouchEvent( MotionEvent event){
 
             if((event.getAction() == MotionEvent.ACTION_DOWN)){
+
                     boolean isRunningNow = ((MainActivity) getContext()).isRunning;
                     Log.e("onTouchEvent","isRunningNow = "+ isRunningNow);
                     if ((xr <= event.getX()) && (xr + 120 >= event.getX())
@@ -134,7 +133,6 @@ public class GameView extends View {
 
                         } else { // on last touch
                             int lvl_cmpx = Settings.getLvlCmpx(Settings.getLevel(), Settings.getComplex());
-
                             ((MainActivity) getContext()).stopGame(lvl_cmpx);
 
                             // save best value

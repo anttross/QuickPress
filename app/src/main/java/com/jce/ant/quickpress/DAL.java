@@ -27,7 +27,7 @@ public class DAL {
     Cursor crs;
 
 
-    // do something
+
 
     public DAL(Context c){
         dbHelper = new DBHelper(c);
@@ -35,23 +35,20 @@ public class DAL {
 
     }//DAL
 
+    // first init
     public void initRecords(){
         //get db
-
         db = dbHelper.getWritableDatabase();
 
         //set data
         ContentValues values;
 
-        //init -> record=empty
         int place, l,c;
         int record=0;
 
         for (l=minLevel;l<=maxLevel;l++) {
             for (c = minComplex; c <= maxComplex; c++) {
                 place = getIndex(l,c);
-               // updateRecord(place, record);
-
 
                 values = new ContentValues();
                 place = getIndex(l, c);
@@ -73,11 +70,8 @@ public class DAL {
 
     }
 
-
+        // update the value of record
     public void updateRecord(int place, int time1)  {
-        //get db
-
-        // check for best record
         int timeDB =getRecord(place);
         db = dbHelper.getWritableDatabase();
 
@@ -108,9 +102,10 @@ public class DAL {
 
     }
 
-
+    // reset the value on place
     public void resetRecord(int place){
         db = dbHelper.getWritableDatabase();
+
         //set data
         int time1 = 0;
         ContentValues values = new ContentValues();
@@ -121,8 +116,9 @@ public class DAL {
         String[] whereArgs = {place +""};
         db.update(BestTime.TimeEntry.TABLE_NAME, values, where, whereArgs);
         db.close();
-    }
+    }//resetRecord
 
+    // get the Record value at place
     public int getRecord(int place){
         db = dbHelper.getReadableDatabase();
 
@@ -131,11 +127,10 @@ public class DAL {
         String table = BestTime.TimeEntry.TABLE_NAME;
         crs = db.rawQuery("SELECT * FROM " + table, null);
 
-        // if(crs.isClosed())
         idRecord = crs.getColumnIndex(BestTime.TimeEntry.RECORD);
         idIndex = crs.getColumnIndex(BestTime.TimeEntry.LVL_CMPX);
 
-     //  if( crs.isNull(1)) {
+
         while (crs.moveToNext()) {
                temp = crs.getInt(idIndex);
             if (temp == place) {
@@ -144,12 +139,13 @@ public class DAL {
                }
                Log.e("getRecord", "get record " + recordReturn + " from index " + place);
            }
-      // }
-       // crs.close();
+
+
         db.close();
         return recordReturn;
-    }
+    }//getRecord
 
+    //Convert To Time  Format
     public String convertToTimeStringFormat(int dbRecord ){
         int secs,milliseconds;
         secs = (int) (dbRecord / 1000);
@@ -160,7 +156,7 @@ public class DAL {
         Log.e("convertTime", "convert " + dbRecord);
         return dBT;
 
-    }
+    }//convertToTimeStringFormat
 
 
     public int getIndex(int level,int complex){
@@ -169,7 +165,7 @@ public class DAL {
     }
 
 
-
+    // check if the DB is empty
     public boolean isBDEmpty() {
         //get db
         db = dbHelper.getReadableDatabase();
@@ -180,5 +176,5 @@ public class DAL {
         }
         db.close();
         return true;
-    }
+    }//isBDEmpty
 }
