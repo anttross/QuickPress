@@ -129,13 +129,7 @@ public class DAL {
         int recordReturn = 0;
         int idIndex,idRecord,temp;
         String table = BestTime.TimeEntry.TABLE_NAME;
-        String selL = BestTime.TimeEntry.LVL_CMPX;
-        String selR = BestTime.TimeEntry.RECORD;
-        crs = db.rawQuery("SELECT "+selL+", "+selR+" FROM " + table, null);
-        int c = crs.getCount();
-        System.out.println("### rows crs has "+ c);
-
-
+        crs = db.rawQuery("SELECT * FROM " + table, null);
 
         // if(crs.isClosed())
         idRecord = crs.getColumnIndex(BestTime.TimeEntry.RECORD);
@@ -144,8 +138,6 @@ public class DAL {
      //  if( crs.isNull(1)) {
         while (crs.moveToNext()) {
                temp = crs.getInt(idIndex);
-                 System.out.println("### temp is "+temp);
-
             if (temp == place) {
                    recordReturn = crs.getInt(idRecord);
                    break;
